@@ -1,7 +1,15 @@
-*.class
+# JetBrains
+.idea/
+*.iml
+*.ipr
+*.iws
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+.build
+out
+build
+.gradle
+
+*.txt
 
 # Package Files #
 *.jar
