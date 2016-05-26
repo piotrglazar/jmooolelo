@@ -1,7 +1,8 @@
 package com.piotrglazar.jmooolelo.providers;
 
-import java.util.List;
+import com.piotrglazar.jmooolelo.api.JvmSettings;
+
 import java.util.function.Supplier;
 
-public interface StartupSettingsProvider extends Supplier<List<String>> {
+public interface StartupSettingsProvider extends Supplier<JvmSettings> {
 }

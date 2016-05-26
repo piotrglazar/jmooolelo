@@ -15,12 +15,12 @@ public class RegistrationRequest {
     private final HealthStatus health;
     private final Optional<String> version;
     private final Optional<JvmSettings> jvmSettings;
-    private final Optional<ServiceConfig> config;
+    private final Optional<ServiceConfiguration> config;
     private final Optional<String> workingDirectory;
 
     public RegistrationRequest(long id, String serviceType, String group, String environment, String hostname, String ip,
                                OptionalInt port, HealthStatus health, Optional<String> version,
-                               Optional<JvmSettings> jvmSettings, Optional<ServiceConfig> config,
+                               Optional<JvmSettings> jvmSettings, Optional<ServiceConfiguration> config,
                                Optional<String> workingDirectory) {
         this.id = id;
         this.serviceType = serviceType;
@@ -76,7 +76,7 @@ public class RegistrationRequest {
         return jvmSettings;
     }
 
-    public Optional<ServiceConfig> getConfig() {
+    public Optional<ServiceConfiguration> getConfig() {
         return config;
     }
 

@@ -1,6 +1,7 @@
 package com.piotrglazar.jmooolelo.providers;
 
 import com.google.common.collect.ImmutableList;
+import com.piotrglazar.jmooolelo.api.JvmSettings;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
@@ -10,14 +11,14 @@ public class JvmStartupSettingsProvider implements StartupSettingsProvider {
 
     private final RuntimeMXBean runtimeMxBean = ManagementFactory.getRuntimeMXBean();
 
-    private final List<String> startupArguments = fetchStartupArguments();
+    private final JvmSettings startupArguments = new JvmSettings(fetchStartupArguments());
 
     private List<String> fetchStartupArguments() {
         return ImmutableList.copyOf(runtimeMxBean.getInputArguments());
     }
 
     @Override
-    public List<String> get() {
+    public JvmSettings get() {
         return startupArguments;
     }
 }

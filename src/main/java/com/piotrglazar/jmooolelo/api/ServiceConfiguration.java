@@ -4,11 +4,11 @@ import com.google.common.collect.ImmutableMap;
 
 import java.util.Map;
 
-public class ServiceConfig {
+public class ServiceConfiguration {
 
     private final Map<String, String> config;
 
-    public ServiceConfig(Map<String, String> config) {
+    public ServiceConfiguration(Map<String, String> config) {
         this.config = ImmutableMap.copyOf(config);
     }
 
