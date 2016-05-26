@@ -14,7 +14,7 @@ import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.concurrent.TimeUnit;
 
-public class App {
+public class Example {
 
     public static void main(String[] args) throws InterruptedException {
         ClientConfig clientConfig = new ClientConfig() {

@@ -1,6 +1,7 @@
 package com.piotrglazar.jmooolelo.api;
 
-public class HeartbeatRequest {
+public class HeartbeatRequest implements MoooleloRequest {
+
     private final long id;
     private final String serviceType;
     private final String group;

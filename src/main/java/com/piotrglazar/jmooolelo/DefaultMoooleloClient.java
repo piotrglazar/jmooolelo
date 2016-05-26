@@ -20,16 +20,9 @@ public class DefaultMoooleloClient implements MoooleloClient {
     private final HeartbeatService heartbeatService;
     private final RegistrationService registrationService;
 
-    private final ClientConfig clientConfig;
-    private final ServiceConfig serviceConfig;
-    private final DataProvider dataProvider;
-
     public DefaultMoooleloClient(ClientConfig clientConfig, ServiceConfig serviceConfig, DataProvider dataProvider) {
-        this.clientConfig = clientConfig;
-        this.serviceConfig = serviceConfig;
-        this.dataProvider = dataProvider;
-        this.heartbeatService = new HeartbeatService();
         this.gateway = new MoooleloGateway(new RestTemplate(), clientConfig.serverConfig());
+        this.heartbeatService = new HeartbeatService(gateway, dataProvider, clientConfig, serviceConfig);
         this.registrationService = new RegistrationService(gateway, dataProvider, clientConfig, serviceConfig);
     }
 
@@ -37,5 +30,6 @@ public class DefaultMoooleloClient implements MoooleloClient {
     public void start() {
         logger.info("Starting mooolelo client");
         registrationService.register();
+        heartbeatService.heartbeat();
     }
 }

@@ -3,7 +3,7 @@ package com.piotrglazar.jmooolelo.api;
 import java.util.Optional;
 import java.util.OptionalInt;
 
-public class RegistrationRequest {
+public class RegistrationRequest implements MoooleloRequest {
 
     private final long id;
     private final String serviceType;
