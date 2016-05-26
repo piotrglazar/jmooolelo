@@ -2,6 +2,7 @@ package com.piotrglazar.jmooolelo.service;
 
 import com.piotrglazar.jmooolelo.api.RegistrationRequest;
 import com.piotrglazar.jmooolelo.config.ClientConfig;
+import com.piotrglazar.jmooolelo.config.ConcurrencyConfig;
 import com.piotrglazar.jmooolelo.config.ServiceConfig;
 import com.piotrglazar.jmooolelo.gateway.MoooleloGateway;
 import com.piotrglazar.jmooolelo.providers.DataProvider;
@@ -10,7 +11,6 @@ import com.piotrglazar.jmooolelo.providers.StartupSettingsProvider;
 import com.piotrglazar.jmooolelo.providers.VersionProvider;
 import com.piotrglazar.jmooolelo.providers.WorkingDirectoryProvider;
 import rx.Observable;
-import rx.schedulers.Schedulers;
 
 import java.util.Optional;
 
@@ -20,19 +20,22 @@ public class RegistrationService {
     private final DataProvider dataProvider;
     private final ClientConfig clientConfig;
     private final ServiceConfig serviceConfig;
+    private final ConcurrencyConfig concurrencyConfig;
 
-    public RegistrationService(MoooleloGateway gateway, DataProvider dataProvider, ClientConfig clientConfig, ServiceConfig serviceConfig) {
+    public RegistrationService(MoooleloGateway gateway, DataProvider dataProvider, ClientConfig clientConfig,
+                               ServiceConfig serviceConfig, ConcurrencyConfig concurrencyConfig) {
         this.gateway = gateway;
         this.dataProvider = dataProvider;
         this.clientConfig = clientConfig;
         this.serviceConfig = serviceConfig;
+        this.concurrencyConfig = concurrencyConfig;
     }
 
     public void register() {
-        Observable.interval(0L, clientConfig.registrationInterval().getValue(), clientConfig.registrationInterval().getTimeUnit())
+        Observable.interval(0L, clientConfig.registrationInterval().getValue(), clientConfig.registrationInterval().getTimeUnit(), concurrencyConfig.intervalScheduler())
                 .map(i -> registrationRequest())
                 .map(gateway::register)
-                .observeOn(Schedulers.io())
+                .observeOn(concurrencyConfig.workerScheduler())
                 .subscribe();
     }
 

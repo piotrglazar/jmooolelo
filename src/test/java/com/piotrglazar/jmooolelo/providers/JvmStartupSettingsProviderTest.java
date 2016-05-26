@@ -12,6 +12,6 @@ public class JvmStartupSettingsProviderTest {
         JvmStartupSettingsProvider provider = new JvmStartupSettingsProvider();
 
         // expect
-        assertThat(provider.get()).isNotEmpty();
+        assertThat(provider.get().getSettings()).isNotEmpty();
     }
 }
