@@ -1,6 +1,5 @@
 package com.piotrglazar.jmooolelo.service;
 
-import com.piotrglazar.jmooolelo.api.HeartbeatRequest;
 import com.piotrglazar.jmooolelo.gateway.MoooleloGateway;
 import com.piotrglazar.jmooolelo.testutil.TestUtils;
 import org.junit.Before;
@@ -12,33 +11,45 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.util.concurrent.TimeUnit;
 
 import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
-public class HeartbeatServiceTest implements TestUtils {
+public class RegistrationServiceTest implements TestUtils {
 
     @Mock
-    private MoooleloGateway moooleloGateway;
+    private MoooleloGateway gateway;
 
     private TestConcurrencyConfig concurrencyConfig = new TestConcurrencyConfig();
 
-    private HeartbeatService heartbeatService;
+    private RegistrationService service;
 
     @Before
     public void create() {
-        heartbeatService = new HeartbeatService(moooleloGateway, dummyDataProvider(), dummyClientConfig(),
-                dummyServiceConfig(), concurrencyConfig);
+        service = new RegistrationService(gateway, dummyDataProvider(), dummyClientConfig(), dummyServiceConfig(), concurrencyConfig);
     }
 
     @Test
-    public void shouldSendHeartbeatRequestAfterInterval() {
+    public void shouldSendRegistrationRequestOnStart() {
         // given
-        heartbeatService.heartbeat();
+        service.register();
+
+        // when
+        concurrencyConfig.intervalScheduler().advanceTimeBy(50, TimeUnit.MILLISECONDS);
+
+        // then
+        verify(gateway).register(any());
+    }
+
+    @Test
+    public void shouldSendRegistrationRequestAfterInterval() {
+        // given
+        service.register();
 
         // when
         concurrencyConfig.intervalScheduler().advanceTimeBy(1500, TimeUnit.MILLISECONDS);
 
         // then
-        verify(moooleloGateway).heartbeat(any(HeartbeatRequest.class));
+        verify(gateway, times(2)).register(any());
     }
 }
