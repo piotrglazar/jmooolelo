@@ -5,14 +5,13 @@ import com.piotrglazar.jmooolelo.config.ClientConfig;
 import com.piotrglazar.jmooolelo.config.ConcurrencyConfig;
 import com.piotrglazar.jmooolelo.config.ServiceConfig;
 import com.piotrglazar.jmooolelo.gateway.MoooleloGateway;
+import com.piotrglazar.jmooolelo.providers.ConfigurationProvider;
 import com.piotrglazar.jmooolelo.providers.DataProvider;
 import com.piotrglazar.jmooolelo.providers.InterfaceProvider;
 import com.piotrglazar.jmooolelo.providers.StartupSettingsProvider;
 import com.piotrglazar.jmooolelo.providers.VersionProvider;
 import com.piotrglazar.jmooolelo.providers.WorkingDirectoryProvider;
 import rx.Observable;
-
-import java.util.Optional;
 
 public class RegistrationService {
 
@@ -41,10 +40,18 @@ public class RegistrationService {
 
     private RegistrationRequest registrationRequest() {
         InterfaceProvider interfaceProvider = dataProvider.getInterfaceProvider();
-        return new RegistrationRequest(serviceConfig.serviceId(), serviceConfig.serviceType(), serviceConfig.serviceGroup(),
-                serviceConfig.environment(), interfaceProvider.hostname(), interfaceProvider.ip(), serviceConfig.servicePort(),
-                dataProvider.getHealthProvider().get(), dataProvider.getVersionProvider().map(VersionProvider::get),
-                dataProvider.getStartupSettingsProvider().map(StartupSettingsProvider::get), Optional.empty(),
+        return new RegistrationRequest(
+                serviceConfig.serviceId(),
+                serviceConfig.serviceType(),
+                serviceConfig.serviceGroup(),
+                serviceConfig.environment(),
+                interfaceProvider.hostname(),
+                interfaceProvider.ip(),
+                serviceConfig.servicePort(),
+                dataProvider.getHealthProvider().get(),
+                dataProvider.getVersionProvider().map(VersionProvider::get),
+                dataProvider.getStartupSettingsProvider().map(StartupSettingsProvider::get),
+                dataProvider.getConfigurationProvider().map(ConfigurationProvider::get),
                 dataProvider.getWorkingDirectoryProvider().map(WorkingDirectoryProvider::get));
     }
 }

@@ -9,17 +9,20 @@ public class DataProvider {
     private final Optional<VersionProvider> versionProvider;
     private final Optional<StartupSettingsProvider> startupSettingsProvider;
     private final Optional<WorkingDirectoryProvider> workingDirectoryProvider;
+    private final Optional<ConfigurationProvider> configurationProvider;
 
     private DataProvider(HealthProvider healthProvider,
                          InterfaceProvider interfaceProvider,
                          Optional<VersionProvider> versionProvider,
                          Optional<StartupSettingsProvider> startupSettingsProvider,
-                         Optional<WorkingDirectoryProvider> workingDirectoryProvider) {
+                         Optional<WorkingDirectoryProvider> workingDirectoryProvider,
+                         Optional<ConfigurationProvider> configurationProvider) {
         this.healthProvider = healthProvider;
         this.interfaceProvider = interfaceProvider;
         this.versionProvider = versionProvider;
         this.startupSettingsProvider = startupSettingsProvider;
         this.workingDirectoryProvider = workingDirectoryProvider;
+        this.configurationProvider = configurationProvider;
     }
 
     public HealthProvider getHealthProvider() {
@@ -42,12 +45,17 @@ public class DataProvider {
         return workingDirectoryProvider;
     }
 
+    public Optional<ConfigurationProvider> getConfigurationProvider() {
+        return configurationProvider;
+    }
+
     public static class DataProviderBuilder {
         private final HealthProvider healthProvider;
         private final InterfaceProvider interfaceProvider;
         private Optional<VersionProvider> versionProvider = Optional.empty();
         private Optional<StartupSettingsProvider> startupSettingsProvider = Optional.empty();
         private Optional<WorkingDirectoryProvider> workingDirectoryProvider = Optional.empty();
+        private Optional<ConfigurationProvider> configurationProvider = Optional.empty();
 
         public DataProviderBuilder(HealthProvider healthProvider, InterfaceProvider interfaceProvider) {
             this.healthProvider = healthProvider;
@@ -69,9 +77,14 @@ public class DataProvider {
             return this;
         }
 
+        public DataProviderBuilder configurationProvider(ConfigurationProvider configurationProvider) {
+            this.configurationProvider = Optional.ofNullable(configurationProvider);
+            return this;
+        }
+
         public DataProvider build() {
             return new DataProvider(healthProvider, interfaceProvider, versionProvider, startupSettingsProvider,
-                    workingDirectoryProvider);
+                    workingDirectoryProvider, configurationProvider);
         }
     }
 }

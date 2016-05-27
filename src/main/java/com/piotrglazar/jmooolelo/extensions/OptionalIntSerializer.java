@@ -9,7 +9,7 @@ import com.google.gson.JsonSerializer;
 import java.lang.reflect.Type;
 import java.util.OptionalInt;
 
-public class OptionalIntSerializer implements JsonSerializer<OptionalInt> {
+class OptionalIntSerializer implements JsonSerializer<OptionalInt> {
 
     @Override
     public JsonElement serialize(OptionalInt src, Type typeOfSrc, JsonSerializationContext context) {

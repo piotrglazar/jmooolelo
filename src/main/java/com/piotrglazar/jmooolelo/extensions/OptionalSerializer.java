@@ -8,7 +8,7 @@ import com.google.gson.JsonSerializer;
 import java.lang.reflect.Type;
 import java.util.Optional;
 
-public class OptionalSerializer implements JsonSerializer<Optional<?>> {
+class OptionalSerializer implements JsonSerializer<Optional<?>> {
 
     @Override
     public JsonElement serialize(Optional<?> src, Type typeOfSrc, JsonSerializationContext context) {

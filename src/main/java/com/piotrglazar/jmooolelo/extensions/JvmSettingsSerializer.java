@@ -8,7 +8,7 @@ import com.piotrglazar.jmooolelo.api.JvmSettings;
 
 import java.lang.reflect.Type;
 
-public class JvmSettingsSerializer implements JsonSerializer<JvmSettings> {
+class JvmSettingsSerializer implements JsonSerializer<JvmSettings> {
 
     @Override
     public JsonElement serialize(JvmSettings src, Type typeOfSrc, JsonSerializationContext context) {

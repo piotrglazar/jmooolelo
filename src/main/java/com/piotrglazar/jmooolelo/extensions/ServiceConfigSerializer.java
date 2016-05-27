@@ -8,7 +8,7 @@ import com.piotrglazar.jmooolelo.api.ServiceConfiguration;
 
 import java.lang.reflect.Type;
 
-public class ServiceConfigSerializer implements JsonSerializer<ServiceConfiguration> {
+class ServiceConfigSerializer implements JsonSerializer<ServiceConfiguration> {
 
     @Override
     public JsonElement serialize(ServiceConfiguration src, Type typeOfSrc, JsonSerializationContext context) {

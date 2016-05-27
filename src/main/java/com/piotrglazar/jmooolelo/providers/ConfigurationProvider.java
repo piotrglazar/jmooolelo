@@ -1,7 +1,8 @@
 package com.piotrglazar.jmooolelo.providers;
 
-import java.util.Map;
+import com.piotrglazar.jmooolelo.api.ServiceConfiguration;
+
 import java.util.function.Supplier;
 
-public interface ConfigurationProvider extends Supplier<Map<String, String>> {
+public interface ConfigurationProvider extends Supplier<ServiceConfiguration> {
 }
