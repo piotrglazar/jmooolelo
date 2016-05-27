@@ -14,7 +14,7 @@ public class ServiceConfigurationTest {
         ServiceConfiguration serviceConfiguration = new ServiceConfiguration(ImmutableMap.of("key", "value"));
 
         // when
-        String json = PimpedGson.gson.toJson(serviceConfiguration);
+        String json = PimpedGson.GSON.toJson(serviceConfiguration);
 
         // then
         assertThat(json).isEqualTo("{\"key\":\"value\"}");

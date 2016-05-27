@@ -26,7 +26,8 @@ public class HeartbeatService {
     }
 
     public void heartbeat() {
-        Observable.interval(clientConfig.heartbeatInterval().getValue(), clientConfig.heartbeatInterval().getTimeUnit(), concurrencyConfig.intervalScheduler())
+        Observable.interval(clientConfig.heartbeatInterval().getValue(), clientConfig.heartbeatInterval().getTimeUnit(),
+                concurrencyConfig.intervalScheduler())
                 .map(i -> request())
                 .map(gateway::heartbeat)
                 .observeOn(concurrencyConfig.workerScheduler())
@@ -34,7 +35,12 @@ public class HeartbeatService {
     }
 
     private HeartbeatRequest request() {
-        return new HeartbeatRequest(serviceConfig.serviceId(), serviceConfig.serviceType(), serviceConfig.serviceGroup(),
-                serviceConfig.environment(), dataProvider.getHealthProvider().get());
+        return new HeartbeatRequest(
+                serviceConfig.serviceId(),
+                serviceConfig.serviceType(),
+                serviceConfig.serviceGroup(),
+                serviceConfig.environment(),
+                dataProvider.getHealthProvider().get()
+        );
     }
 }

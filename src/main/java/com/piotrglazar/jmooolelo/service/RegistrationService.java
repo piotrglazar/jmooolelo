@@ -31,7 +31,8 @@ public class RegistrationService {
     }
 
     public void register() {
-        Observable.interval(0L, clientConfig.registrationInterval().getValue(), clientConfig.registrationInterval().getTimeUnit(), concurrencyConfig.intervalScheduler())
+        Observable.interval(0L, clientConfig.registrationInterval().getValue(),
+                clientConfig.registrationInterval().getTimeUnit(), concurrencyConfig.intervalScheduler())
                 .map(i -> registrationRequest())
                 .map(gateway::register)
                 .observeOn(concurrencyConfig.workerScheduler())

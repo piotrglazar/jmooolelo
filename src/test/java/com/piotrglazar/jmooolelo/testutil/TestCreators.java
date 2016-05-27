@@ -13,12 +13,14 @@ import java.util.OptionalInt;
 
 public interface TestCreators {
 
+    @SuppressWarnings("PMD")
     default RegistrationRequest registrationRequest() {
         return new RegistrationRequest(1, "test", "test", "test", "same", "0.0.0.0",
-                OptionalInt.empty(), new HealthStatus(true, Optional.empty()), Optional.empty(), Optional.empty(), Optional.empty(),
-                Optional.empty());
+                OptionalInt.empty(), new HealthStatus(true, Optional.empty()), Optional.empty(), Optional.empty(),
+                Optional.empty(), Optional.empty());
     }
 
+    @SuppressWarnings("PMD")
     default RegistrationRequest fullRegistrationRequest() {
         return new RegistrationRequest(1, "test", "test", "test", "same", "0.0.0.0", OptionalInt.of(10),
                 new HealthStatus(true, Optional.empty()), Optional.of("0.1"),

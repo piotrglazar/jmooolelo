@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 
 public class BasicInterfaceProvider implements InterfaceProvider {
 
-    private static final Pattern ipPattern = Pattern.compile("\\b(?:\\d{1,3}\\.){3}\\d{1,3}\\b");
+    private static final Pattern IP_PATTERN = Pattern.compile("\\b(?:\\d{1,3}\\.){3}\\d{1,3}\\b");
 
     private final String interfaceName;
     private final String ip;
@@ -35,7 +35,7 @@ public class BasicInterfaceProvider implements InterfaceProvider {
         Enumeration<InetAddress> inetAddresses = run(() -> NetworkInterface.getByName(interfaceName)).getInetAddresses();
         Optional<String> ipOpt = Collections.list(inetAddresses).stream()
                 .map(InetAddress::getHostAddress)
-                .filter(s -> ipPattern.matcher(s).find())
+                .filter(s -> IP_PATTERN.matcher(s).find())
                 .findAny();
         return ipOpt.orElse("unknown");
     }

@@ -50,25 +50,28 @@ public class MoooleloGateway {
     }
 
     private HttpEntity<String> httpEntity(MoooleloRequest request) {
-        return new HttpEntity<>(PimpedGson.gson.toJson(request), httpHeaders());
+        return new HttpEntity<>(PimpedGson.GSON.toJson(request), httpHeaders());
     }
 
     private Void registrationSuccessHandler(ResponseEntity<String> responseEntity) {
-        return successHandler(() -> logger.info("Successfully registered service in Mooolelo ({}:{})", serverConfig.host(), serverConfig.port()),
-                (status) -> logger.error("Failed to register service in Mooolelo ({}:{}), got status code {} {}", serverConfig.host(),
-                        serverConfig.port(), status.value(), status.getReasonPhrase()),
+        return successHandler(() -> logger.info("Successfully registered service in Mooolelo ({}:{})",
+                serverConfig.host(), serverConfig.port()),
+                (status) -> logger.error("Failed to register service in Mooolelo ({}:{}), got status code {} {}",
+                        serverConfig.host(), serverConfig.port(), status.value(), status.getReasonPhrase()),
                 responseEntity);
     }
 
     private Void heartbeatSuccessHandler(ResponseEntity<String> responseEntity) {
-        return successHandler(() -> logger.info("Successfully sent heartbeat to Mooolelo ({}:{})", serverConfig.host(), serverConfig.port()),
-                (status) -> logger.error("Failed to send heartbeat to Mooolelo ({}:{}), got status code {} {}" ,serverConfig.host(),
-                        serverConfig.port(), status.value(), status.getReasonPhrase()),
+        return successHandler(() -> logger.info("Successfully sent heartbeat to Mooolelo ({}:{})", serverConfig.host(),
+                serverConfig.port()),
+                (status) -> logger.error("Failed to send heartbeat to Mooolelo ({}:{}), got status code {} {}" ,
+                        serverConfig.host(), serverConfig.port(), status.value(), status.getReasonPhrase()),
                 responseEntity
         );
     }
 
-    private Void successHandler(Runnable successAction, Consumer<HttpStatus> failureAction, ResponseEntity<String> responseEntity) {
+    private Void successHandler(Runnable successAction, Consumer<HttpStatus> failureAction,
+                                ResponseEntity<String> responseEntity) {
         HttpStatus status = responseEntity.getStatusCode();
         if (status.is2xxSuccessful()) {
             successAction.run();
@@ -82,11 +85,13 @@ public class MoooleloGateway {
     }
 
     private Void heartbeatExceptionHandler(Throwable t) {
-        return exceptionHandler(String.format("Failed to send heartbeat to %s:%s", serverConfig.host(), serverConfig.port()), t);
+        return exceptionHandler(String.format("Failed to send heartbeat to %s:%s", serverConfig.host(),
+                serverConfig.port()), t);
     }
 
     private Void registrationExceptionHandler(Throwable t) {
-        return exceptionHandler(String.format("Failed to register service in %s:%s", serverConfig.host(), serverConfig.port()), t);
+        return exceptionHandler(String.format("Failed to register service in %s:%s", serverConfig.host(),
+                serverConfig.port()), t);
     }
 
     private Void exceptionHandler(String message, Throwable t) {

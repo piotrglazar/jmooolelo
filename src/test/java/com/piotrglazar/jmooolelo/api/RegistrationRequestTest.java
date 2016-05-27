@@ -14,7 +14,7 @@ public class RegistrationRequestTest implements TestCreators {
         RegistrationRequest registrationRequest = registrationRequest();
 
         // when
-        String json = PimpedGson.gson.toJson(registrationRequest);
+        String json = PimpedGson.GSON.toJson(registrationRequest);
 
         // then
         assertThat(json).contains("id", "serviceType", "group", "environment", "host", "ip", "health");
@@ -31,7 +31,7 @@ public class RegistrationRequestTest implements TestCreators {
         RegistrationRequest registrationRequest = fullRegistrationRequest();
 
         // when
-        String json = PimpedGson.gson.toJson(registrationRequest);
+        String json = PimpedGson.GSON.toJson(registrationRequest);
 
         // then
         assertThat(json).contains("id", "serviceType", "group", "environment", "host", "ip", "health", "port", "version",

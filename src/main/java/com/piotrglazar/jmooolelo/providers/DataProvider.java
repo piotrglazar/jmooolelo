@@ -2,7 +2,7 @@ package com.piotrglazar.jmooolelo.providers;
 
 import java.util.Optional;
 
-public class DataProvider {
+public final class DataProvider {
 
     private final HealthProvider healthProvider;
     private final InterfaceProvider interfaceProvider;

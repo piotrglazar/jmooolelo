@@ -14,7 +14,7 @@ public class JvmSettingsTest {
         JvmSettings jvmSettings = new JvmSettings(ImmutableList.of("a", "b", "c"));
 
         // when
-        String json = PimpedGson.gson.toJson(jvmSettings);
+        String json = PimpedGson.GSON.toJson(jvmSettings);
 
         // then
         assertThat(json).isEqualTo("[\"a\",\"b\",\"c\"]");

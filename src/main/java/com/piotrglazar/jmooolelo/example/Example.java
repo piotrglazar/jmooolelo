@@ -69,7 +69,8 @@ public class Example {
                 return OptionalInt.empty();
             }
         };
-        DataProvider dataProvider = new DataProvider.DataProviderBuilder(() -> new HealthStatus(true, Optional.empty()), new BasicInterfaceProvider()).build();
+        DataProvider dataProvider = new DataProvider.DataProviderBuilder(() -> new HealthStatus(true, Optional.empty()),
+                new BasicInterfaceProvider()).build();
 
         MoooleloClient client = new DefaultMoooleloClient(clientConfig, serviceConfig, dataProvider);
 

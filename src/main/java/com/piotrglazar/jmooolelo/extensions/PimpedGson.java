@@ -10,7 +10,7 @@ import java.util.OptionalInt;
 
 public class PimpedGson {
 
-    public static final Gson gson = new GsonBuilder()
+    public static final Gson GSON = new GsonBuilder()
             .registerTypeAdapter(JvmSettings.class, new JvmSettingsSerializer())
             .registerTypeAdapter(OptionalInt.class, new OptionalIntSerializer())
             .registerTypeAdapter(Optional.class, new OptionalSerializer())

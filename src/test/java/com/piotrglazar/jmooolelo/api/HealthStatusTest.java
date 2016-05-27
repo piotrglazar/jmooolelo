@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import java.util.Optional;
 
-import static com.piotrglazar.jmooolelo.extensions.PimpedGson.gson;
+import static com.piotrglazar.jmooolelo.extensions.PimpedGson.GSON;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class HealthStatusTest {
@@ -15,7 +15,7 @@ public class HealthStatusTest {
         HealthStatus healthStatus = new HealthStatus(true, Optional.of("test"));
 
         // when
-        String json = gson.toJson(healthStatus);
+        String json = GSON.toJson(healthStatus);
 
         // then
         assertThat(json).contains("isHealthy");
@@ -28,7 +28,7 @@ public class HealthStatusTest {
         HealthStatus healthStatus = new HealthStatus(true, Optional.empty());
 
         // when
-        String json = gson.toJson(healthStatus);
+        String json = GSON.toJson(healthStatus);
 
         // then
         assertThat(json).contains("isHealthy");
