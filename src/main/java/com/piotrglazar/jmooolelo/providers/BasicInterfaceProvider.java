@@ -7,6 +7,7 @@ import java.net.NetworkInterface;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Optional;
+import java.util.concurrent.Callable;
 import java.util.regex.Pattern;
 
 public class BasicInterfaceProvider implements InterfaceProvider {
@@ -50,13 +51,9 @@ public class BasicInterfaceProvider implements InterfaceProvider {
         return hostname;
     }
 
-    private interface Failable<T> {
-        T execute() throws Exception;
-    }
-
-    private <T> T run(Failable<T> action) {
+    private <T> T run(Callable<T> action) {
         try {
-            return action.execute();
+            return action.call();
         } catch (Exception e) {
             throw Throwables.propagate(e);
         }

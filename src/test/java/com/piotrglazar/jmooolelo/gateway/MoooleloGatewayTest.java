@@ -16,6 +16,7 @@ import java.util.concurrent.ExecutionException;
 
 import static com.xebialabs.restito.builder.stub.StubHttp.whenHttp;
 import static com.xebialabs.restito.semantics.Action.status;
+import static com.xebialabs.restito.semantics.Action.stringContent;
 import static com.xebialabs.restito.semantics.Condition.post;
 
 public class MoooleloGatewayTest implements TestCreators {
@@ -72,6 +73,51 @@ public class MoooleloGatewayTest implements TestCreators {
         CompletableFuture<Void> result = gateway.heartbeat(heartbeatRequest);
 
         // then no exception
+        result.get();
+    }
+
+    @Test
+    public void shouldNotFailWhenServerRespondsWithHttp400AfterRegistration() throws ExecutionException, InterruptedException {
+        // given
+        whenHttp(server)
+                .match(post("/services"))
+                .then(status(HttpStatus.BAD_REQUEST_400));
+        RegistrationRequest registrationRequest = registrationRequest();
+
+        // when
+        CompletableFuture<Void> result = gateway.register(registrationRequest);
+
+        // then
+        result.get();
+    }
+
+    @Test
+    public void shouldNotFailWhenServerRespondsWithHttp400AfterHeartbeat() throws ExecutionException, InterruptedException {
+        // given
+        whenHttp(server)
+                .match(post("/services/type/group/1"))
+                .then(status(HttpStatus.BAD_REQUEST_400));
+        HeartbeatRequest heartbeatRequest = heartbeatRequest();
+
+        // when
+        CompletableFuture<Void> result = gateway.heartbeat(heartbeatRequest);
+
+        // then
+        result.get();
+    }
+
+    @Test
+    public void shouldNotFailWhenUnexpectedStatusCodeWasSent() throws ExecutionException, InterruptedException {
+        // given
+        whenHttp(server)
+                .match(post("/services"))
+                .then(status(HttpStatus.FOUND_302), stringContent("testing"));
+        RegistrationRequest registrationRequest = registrationRequest();
+
+        // when
+        CompletableFuture<Void> result = gateway.register(registrationRequest);
+
+        // then
         result.get();
     }
 }

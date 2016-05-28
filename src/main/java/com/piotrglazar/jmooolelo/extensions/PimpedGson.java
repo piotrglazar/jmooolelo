@@ -16,4 +16,8 @@ public class PimpedGson {
             .registerTypeAdapter(Optional.class, new OptionalSerializer())
             .registerTypeAdapter(ServiceConfiguration.class, new ServiceConfigSerializer())
             .create();
+
+    private PimpedGson() {
+        // utility class
+    }
 }

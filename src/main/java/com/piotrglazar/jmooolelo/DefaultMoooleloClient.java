@@ -17,7 +17,7 @@ import java.lang.invoke.MethodHandles;
 
 public class DefaultMoooleloClient implements MoooleloClient {
 
-    private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     private final MoooleloGateway gateway;
     private final HeartbeatService heartbeatService;
@@ -31,7 +31,7 @@ public class DefaultMoooleloClient implements MoooleloClient {
 
     @Override
     public void start() {
-        logger.info("Starting mooolelo client");
+        LOGGER.info("Starting mooolelo client");
         registrationService.register();
         heartbeatService.heartbeat();
     }

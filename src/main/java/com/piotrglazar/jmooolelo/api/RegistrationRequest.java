@@ -18,6 +18,7 @@ public class RegistrationRequest implements MoooleloRequest {
     private final Optional<ServiceConfiguration> config;
     private final Optional<String> workingDirectory;
 
+    @SuppressWarnings("all")
     public RegistrationRequest(long id, String serviceType, String group, String environment, String hostname, String ip,
                                OptionalInt port, HealthStatus health, Optional<String> version,
                                Optional<JvmSettings> jvmSettings, Optional<ServiceConfiguration> config,

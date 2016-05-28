@@ -16,59 +16,69 @@ import java.util.concurrent.TimeUnit;
 
 public class Example {
 
+    private Example() {
+        // not needed here
+    }
+
+    private static class ExampleClientConfig implements ClientConfig {
+
+        @Override
+        public ServerConfig serverConfig() {
+            return new ServerConfig() {
+                @Override
+                public String host() {
+                    return "http://localhost";
+                }
+
+                @Override
+                public int port() {
+                    return 8666;
+                }
+            };
+        }
+
+        @Override
+        public Duration registrationInterval() {
+            return new Duration(3, TimeUnit.SECONDS);
+        }
+
+        @Override
+        public Duration heartbeatInterval() {
+            return new Duration(1, TimeUnit.SECONDS);
+        }
+    }
+
+    private static class ExampleServiceConfig implements ServiceConfig {
+
+        @Override
+        public int serviceId() {
+            return 1;
+        }
+
+        @Override
+        public String serviceType() {
+            return "testType";
+        }
+
+        @Override
+        public String serviceGroup() {
+            return "testGroup";
+        }
+
+        @Override
+        public String environment() {
+            return "testEnvironment";
+        }
+
+        @Override
+        public OptionalInt servicePort() {
+            return OptionalInt.empty();
+        }
+    }
+
     public static void main(String[] args) throws InterruptedException {
-        ClientConfig clientConfig = new ClientConfig() {
-            @Override
-            public ServerConfig serverConfig() {
-                return new ServerConfig() {
-                    @Override
-                    public String host() {
-                        return "http://localhost";
-                    }
-
-                    @Override
-                    public int port() {
-                        return 8666;
-                    }
-                };
-            }
-
-            @Override
-            public Duration registrationInterval() {
-                return new Duration(3, TimeUnit.SECONDS);
-            }
-
-            @Override
-            public Duration heartbeatInterval() {
-                return new Duration(1, TimeUnit.SECONDS);
-            }
-        };
-        ServiceConfig serviceConfig = new ServiceConfig() {
-            @Override
-            public int serviceId() {
-                return 1;
-            }
-
-            @Override
-            public String serviceType() {
-                return "test";
-            }
-
-            @Override
-            public String serviceGroup() {
-                return "test";
-            }
-
-            @Override
-            public String environment() {
-                return "test";
-            }
-
-            @Override
-            public OptionalInt servicePort() {
-                return OptionalInt.empty();
-            }
-        };
+        ClientConfig clientConfig = new ExampleClientConfig();
+        ServiceConfig serviceConfig = new ExampleServiceConfig();
         DataProvider dataProvider = new DataProvider.DataProviderBuilder(() -> new HealthStatus(true, Optional.empty()),
                 new BasicInterfaceProvider()).build();
 
